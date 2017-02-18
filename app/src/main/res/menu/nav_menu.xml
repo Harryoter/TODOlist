@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group1">
+        <item android:id="@+id/nav_mine"
+            android:title="个人信息"
+            android:icon="@drawable/ic_person_black_18dp"/>
+        <item android:id="@+id/nav_weather"
+            android:title="天气"
+            android:icon="@drawable/weather"/>
+        <item android:title="难度排序"
+            android:id="@+id/nav_degree"
+            android:icon="@drawable/degree_bottom"/>
+        <item android:id="@+id/nav_time"
+            android:title="时间排序"
+            android:icon="@drawable/time_top"/>
+    </group>
+    <group android:id="@+id/group2">
+        <item android:title="全部删除"
+            android:icon="@drawable/ic_delete_sweep_black_18dp"
+            android:id="@+id/nav_delete"/>
+        <item android:id="@+id/nav_bin"
+            android:icon="@drawable/ic_delete_black_18dp"
+            android:title="回收站"/>
+    </group>
+</menu>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dbname value="ListData"></dbname>
+    <version value="7"></version>
+    <list>
+        <mapping class="com.example.hasee.materialtest.ToDolist.RecyclerItem"></mapping>
+        <mapping class="com.example.hasee.materialtest.ToDolist.MyExp"></mapping>
+        <mapping class="com.example.hasee.materialtest.ToDolist.RecyclerBinItem"></mapping>
+        <mapping class="com.example.hasee.materialtest.Weather.db.City"></mapping>
+        <mapping class="com.example.hasee.materialtest.Weather.db.County"></mapping>
+        <mapping class="com.example.hasee.materialtest.Weather.db.Province"></mapping>
+    </list>
+</resources>
