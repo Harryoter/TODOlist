@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.example.hasee.materialtest.R;
 
@@ -31,9 +30,7 @@ public class RecyclerBin extends AppCompatActivity{
 
     private RecyclerView mRecyclerView;
     private List<RecyclerBinItem> mRecyclerBinItem=new ArrayList<RecyclerBinItem>();
-    private TextView taskView;
-    private TextView degreeView;
-    private TextView expView;
+    private MyBinAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +44,9 @@ public class RecyclerBin extends AppCompatActivity{
         mRecyclerView=(RecyclerView)findViewById(R.id.bin_recycler_view);
         GridLayoutManager layoutManager=new GridLayoutManager(this,1);
         mRecyclerView.setLayoutManager(layoutManager);
-        final MyBinAdapter mAdapter=new MyBinAdapter(RecyclerBin.this,mRecyclerBinItem);
+        mAdapter=new MyBinAdapter(RecyclerBin.this,mRecyclerBinItem);
         mRecyclerView.setAdapter(mAdapter);
+
         mAdapter.setmOnItemClickListener(new MyBinAdapter.OnItemClickListener() {
             @Override
             public void OnItemLongClick(View view, final int position) {
@@ -109,8 +107,7 @@ public class RecyclerBin extends AppCompatActivity{
         init();
         GridLayoutManager layoutManager=new GridLayoutManager(this,1);
         mRecyclerView.setLayoutManager(layoutManager);
-        final MyBinAdapter mAdapter=new MyBinAdapter(RecyclerBin.this,mRecyclerBinItem);
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter=new MyBinAdapter(RecyclerBin.this,mRecyclerBinItem);
     }
 
 }
