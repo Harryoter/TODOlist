@@ -102,12 +102,14 @@ public class AddItem extends AppCompatActivity{
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (exp.matches(reg)&&!task.equals("")){
                             Intent intent=new Intent(AddItem.this, MainActivity.class);
+                            RecyclerItem recyclerItem=new RecyclerItem();
                             new Date();
                             long time=System.currentTimeMillis();
-                            intent.putExtra("task",task);
-                            intent.putExtra("degree",degree);
-                            intent.putExtra("exp",exp);
-                            intent.putExtra("time",time);
+                            recyclerItem.setSaveTime(time);
+                            recyclerItem.setExp(exp);
+                            recyclerItem.setDegree(degree);
+                            recyclerItem.setTask(task);
+                            recyclerItem.save();
                             startActivity(intent);
                             AddItem.this.finish();
                         }else {
