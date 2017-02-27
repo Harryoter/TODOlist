@@ -1,7 +1,6 @@
 package com.example.hasee.materialtest.ToDolist;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.hasee.materialtest.R;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.Date;
 
 /**
@@ -26,21 +27,24 @@ public class AddItem extends AppCompatActivity{
     private Spinner spinnerDegree;
     private EditText editExp;
     private String reg="^[1-9]\\d*$";
+    private String everTask;
+    private int everDegree;
+    private String everExp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item);
         Toolbar toolbar=(Toolbar)findViewById(R.id.add_item_menu);
         setSupportActionBar(toolbar);
-        String task=getIntent().getStringExtra("task");
-        int degree=getIntent().getIntExtra("degree",0);
-        String exp=getIntent().getStringExtra("exp");
+        everTask=getIntent().getStringExtra("task");
+        everDegree=getIntent().getIntExtra("degree",0);
+        everExp=getIntent().getStringExtra("exp");
         editTask=(EditText)findViewById(R.id.add_task);
         spinnerDegree=(Spinner) findViewById(R.id.add_degree);
         editExp=(EditText)findViewById(R.id.add_exp);
-        editTask.setText(task);
-        spinnerDegree.setSelection(degree-1);
-        editExp.setText(exp);
+        editTask.setText(everTask);
+        spinnerDegree.setSelection(everDegree-1);
+        editExp.setText(everExp);
     }
 
     @Override
@@ -62,7 +66,10 @@ public class AddItem extends AppCompatActivity{
                 task=editTask.getText().toString();
                 degree=Integer.parseInt(spinnerDegree.getSelectedItem().toString());
                 exp=editExp.getText().toString();
-                if (exp.matches(reg)&&task.length()>=3){
+                if (exp.equals(everExp)&&task.equals(everTask)&&degree==everDegree){
+                    AddItem.this.finish();
+                }else if (exp.matches(reg)&&task.length()>=3){
+                    DataSupport.deleteAll(RecyclerItem.class,"task=?",everTask);
                     RecyclerItem recyclerItem=new RecyclerItem();
                     recyclerItem.setExp(exp);
                     recyclerItem.setDegree(degree);
@@ -93,7 +100,10 @@ public class AddItem extends AppCompatActivity{
         degree=Integer.parseInt(spinnerDegree.getSelectedItem().toString());
         exp=editExp.getText().toString();
         if (keyCode==KeyEvent.KEYCODE_BACK&&event.getRepeatCount()==0){
-            if (!task.equals("")&&!exp.equals("")){
+            if (exp.equals(everExp)&&task.equals(everTask)&&degree==everDegree){
+                AddItem.this.finish();
+            }else if (!task.equals("")&&!exp.equals("")){
+                DataSupport.deleteAll(RecyclerItem.class,"task=?",everTask);
                 AlertDialog.Builder builder=new AlertDialog.Builder(AddItem.this);
                 builder.setTitle("是否保存编辑");
                 builder.setCancelable(false);
@@ -101,7 +111,6 @@ public class AddItem extends AppCompatActivity{
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (exp.matches(reg)&&!task.equals("")){
-                            Intent intent=new Intent(AddItem.this, MainActivity.class);
                             RecyclerItem recyclerItem=new RecyclerItem();
                             new Date();
                             long time=System.currentTimeMillis();
@@ -110,7 +119,6 @@ public class AddItem extends AppCompatActivity{
                             recyclerItem.setDegree(degree);
                             recyclerItem.setTask(task);
                             recyclerItem.save();
-                            startActivity(intent);
                             AddItem.this.finish();
                         }else {
                             Toast.makeText(AddItem.this,"输入格式有误",Toast.LENGTH_SHORT).show();
@@ -120,8 +128,6 @@ public class AddItem extends AppCompatActivity{
                 builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent=new Intent(AddItem.this, MainActivity.class);
-                        startActivity(intent);
                         AddItem.this.finish();
                     }
                 });
