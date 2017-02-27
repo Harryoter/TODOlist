@@ -179,10 +179,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 intent.putExtra("degree", degree);
                 intent.putExtra("exp", exp);
                 startActivity(intent);
-                DataSupport.deleteAll(RecyclerItem.class,"task=?",task);
                 adapter.notifyItemRemoved(position);
                 adapter.notifyItemChanged(0, nowRecyclerItemList.size());
-                MainActivity.this.finish();
             }
 
 
